@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Колосок — детский развивающий центр в Саратове</title>
+
+  <!-- Два шрифта: Cormorant Garamond (заголовок и подписи) и Mulish (остальной текст) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Mulish:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========== Цвета ==========
+       Основной — спелая пшеница (золото)
+       Акцентный — василёк (синий), как в поле рядом с колосьями */
+    :root {
+      --paper: #fbf5e6;
+      --ink: #2d2410;
+      --muted: #6f6244;
+      --gold: #b87408;
+      --gold-fill: #e8b13a;
+      --on-gold: #2d2410;
+      --blue: #3556c9;
+
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --paper: #1c1808;
+        --ink: #f7efd8;
+        --muted: #cdbf98;
+        --gold: #e8b13a;
+        --on-gold: #1c1808;
+        --blue: #8aa6ff;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --paper: #1c1808;
+      --ink: #f7efd8;
+      --muted: #cdbf98;
+      --gold: #e8b13a;
+      --on-gold: #1c1808;
+      --blue: #8aa6ff;
+    }
+
+    /* ========== Базовые стили ========== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px;
+    }
+
+    .screen {
+      min-height: 100%;
+      padding: 0 22px 40px;
+    }
+
+    .inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* ========== Шапка ========== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 0 0;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    header a {
+      color: var(--blue);
+      font-weight: 700;
+      text-underline-offset: 4px;
+    }
+
+    /* ========== Название и контакты ========== */
+    .top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 24px 40px;
+      padding: 28px 0 8px;
+    }
+
+    h1 {
+      font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      font-size: clamp(64px, 14vw, 172px);
+      line-height: 0.85;
+      color: var(--gold);
+      letter-spacing: -0.01em;
+    }
+
+    .kind {
+      margin-top: 14px;
+      font-size: 19px;
+      color: var(--muted);
+    }
+
+    .contact {
+      display: grid;
+      gap: 10px;
+      justify-items: start;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 26px;
+      background: var(--gold-fill);
+      color: var(--on-gold);
+      font-weight: 700;
+      font-size: 19px;
+      text-decoration: none;
+      border-radius: 999px 999px 999px 4px;
+    }
+
+    .btn:hover {
+      filter: brightness(1.06);
+    }
+
+    .contact a.vk {
+      font-weight: 700;
+      text-underline-offset: 4px;
+    }
+
+    .addr {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    /* ========== Колосок: гербарная «таблица» ==========
+       Шесть пар зёрен на стебле. Слева и справа подписаны направления
+       центра, каждая подпись соединена линией с «своим» зерном. */
+    .plate {
+      display: grid;
+      grid-template-columns: 1fr 150px 1fr;
+      margin-top: 20px;
+    }
+
+    .col .head {
+      height: 140px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 20px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .col ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .col li {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      font-size: 23px;
+      line-height: 1.1;
+    }
+
+    /* Линия с василькового цвета точкой на конце */
+    .col li::before,
+    .col li::after {
+      content: "";
+      flex: 1 1 24px;
+      min-width: 24px;
+      height: 8px;
+      background:
+        linear-gradient(var(--gold), var(--gold)) center / 100% 1px no-repeat;
+    }
+
+    .left {
+      text-align: right;
+    }
+
+    .left li {
+      justify-content: flex-end;
+    }
+
+    .left li::before {
+      display: none;
+    }
+
+    .left li::after {
+      flex: 0 0 56px;
+      background:
+        radial-gradient(circle at right center, var(--blue) 0 3.5px, transparent 4px),
+        linear-gradient(var(--gold), var(--gold)) center / 100% 1px no-repeat;
+    }
+
+    .right li::after {
+      display: none;
+    }
+
+    .right li::before {
+      flex: 0 0 56px;
+      background:
+        radial-gradient(circle at left center, var(--blue) 0 3.5px, transparent 4px),
+        linear-gradient(var(--gold), var(--gold)) center / 100% 1px no-repeat;
+    }
+
+    /* ========== Рисунок колоса ========== */
+    .ear {
+      width: 150px;
+      height: 584px;
+    }
+
+    .stem {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: grow 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .g use {
+      fill: var(--gold-fill);
+      stroke: var(--gold);
+      stroke-width: 1.5;
+      stroke-linejoin: round;
+    }
+
+    .g line {
+      stroke: var(--gold);
+      stroke-width: 1.3;
+      stroke-linecap: round;
+    }
+
+    /* Единственная анимация: стебель растёт, зёрна появляются снизу вверх */
+    .g {
+      animation: sprout 0.7s var(--d) both;
+    }
+
+    @keyframes grow {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes sprout {
+      from { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stem {
+        animation: none;
+        stroke-dashoffset: 0;
+      }
+
+      .g {
+        animation: none;
+      }
+    }
+
+    /* ========== Телефоны ========== */
+    @media (max-width: 760px) {
+      .top {
+        grid-template-columns: 1fr;
+      }
+
+      .plate {
+        grid-template-columns: 84px 1fr;
+        grid-template-areas:
+          "ear left"
+          "ear right";
+        column-gap: 18px;
+        align-items: start;
+      }
+
+      .ear {
+        grid-area: ear;
+        width: 84px;
+        height: auto;
+      }
+
+      .left {
+        grid-area: left;
+        text-align: left;
+      }
+
+      .right {
+        grid-area: right;
+      }
+
+      .col .head {
+        height: auto;
+        padding: 6px 0 4px;
+      }
+
+      .col li {
+        height: auto;
+        padding: 9px 0;
+        font-size: 21px;
+        border-top: 1px solid var(--gold);
+      }
+
+      .col li::before,
+      .col li::after {
+        display: none;
+      }
+
+      .left li {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="screen">
+    <div class="inner">
+
+      <!-- ========== Шапка ========== -->
+      <header>
+        <span>Саратов</span>
+        <a href="https://vk.ru/club38237114" target="_blank" rel="noopener">Свежие новости</a>
+      </header>
+
+      <!-- ========== Название и контакты ========== -->
+      <div class="top">
+        <div>
+          <h1>Колосок</h1>
+          <p class="kind">Детский развивающий центр</p>
+        </div>
+
+        <div class="contact">
+          <a class="btn" href="tel:+79869941157">+7 (986) 994-11-57</a>
+          <a class="vk" href="https://vk.ru/club38237114" target="_blank" rel="noopener">Написать ВКонтакте</a>
+          <p class="addr">Саратов, 2-я Садовая, 23г</p>
+        </div>
+      </div>
+
+      <!-- ========== Колосок и направления ========== -->
+      <section class="plate" aria-label="Направления центра">
+
+        <div class="col left">
+          <p class="head">Малыши и творчество</p>
+          <ul>
+            <li>Развивающая студия для детей 2–5 лет</li>
+            <li>Ритмика для малышей</li>
+            <li>Группа ухода и присмотра</li>
+            <li>Кружок лепки из глины</li>
+            <li>Рисование «Весёлая кисточка»</li>
+            <li>Кружок народного танца</li>
+          </ul>
+        </div>
+
+        <svg class="ear" viewBox="25 0 150 584" aria-hidden="true">
+          <defs>
+            <path id="grain" d="M0 0 C 11 -14 11 -38 0 -52 C -11 -38 -11 -14 0 0Z"/>
+          </defs>
+
+          <path class="stem" pathLength="1" d="M100 584 C 100 470 99 330 100 150"/>
+
+          <!-- Пары зёрен снизу вверх -->
+          <g class="g" style="--d:1.0s" transform="translate(100 514) rotate(-32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+          <g class="g" style="--d:1.0s" transform="translate(100 514) rotate(32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+
+          <g class="g" style="--d:1.2s" transform="translate(100 450) rotate(-32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+          <g class="g" style="--d:1.2s" transform="translate(100 450) rotate(32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+
+          <g class="g" style="--d:1.4s" transform="translate(100 386) rotate(-32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+          <g class="g" style="--d:1.4s" transform="translate(100 386) rotate(32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+
+          <g class="g" style="--d:1.6s" transform="translate(100 322) rotate(-32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+          <g class="g" style="--d:1.6s" transform="translate(100 322) rotate(32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+
+          <g class="g" style="--d:1.8s" transform="translate(100 258) rotate(-32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+          <g class="g" style="--d:1.8s" transform="translate(100 258) rotate(32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+
+          <g class="g" style="--d:2.0s" transform="translate(100 194) rotate(-32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+          <g class="g" style="--d:2.0s" transform="translate(100 194) rotate(32)"><use href="#grain"/><line x1="0" y1="-52" x2="0" y2="-118"/></g>
+
+          <!-- Верхнее зерно с остями -->
+          <g class="g" style="--d:2.2s" transform="translate(100 150)">
+            <use href="#grain"/>
+            <line x1="0" y1="-52" x2="0" y2="-122"/>
+            <line x1="0" y1="-52" x2="-17" y2="-114"/>
+            <line x1="0" y1="-52" x2="17" y2="-114"/>
+          </g>
+        </svg>
+
+        <div class="col right">
+          <p class="head">Учёба и школьники</p>
+          <ul>
+            <li>Английский для детей</li>
+            <li>Вокал</li>
+            <li>Логопед</li>
+            <li>Репетитор начальных классов</li>
+            <li>Продлёнка для школьников</li>
+            <li>Летняя площадка для школьников</li>
+          </ul>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+
+</body>
+</html>
